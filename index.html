@@ -1,0 +1,1021 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>Numberline</title>
+	<meta name="description" content="Numberline">
+	<meta name="author" content="SitePoint">
+	<link href="css/reset.css" rel="stylesheet">
+	<link href="js/jquery-ui.min.css" rel="stylesheet">
+	<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' />
+	<style>
+
+		@font-face {
+		    font-family: 'aldibold';
+		    src: url('fonts/aldi-bold-webfont.woff2') format('woff2'),
+			url('fonts/aldi-bold-webfont.woff') format('woff');
+		    font-weight: normal;
+		    font-style: normal;
+		}
+		body,html { 
+			font-family: 'aldibold';
+			overflow: hidden;
+			background-color: #82E9FF;
+			margin:0px;
+			padding:0px;
+			min-width:100%;
+		}
+		.wrapper {
+			display: block;
+			position: absolute;
+			left:50%;
+			width:100%;
+			height: 100%;
+			max-width: 100%;
+			max-height: 100%;
+			margin: 0 auto;
+			-ms-transform: translateX(-50%);
+        	-webkit-transform: translateX(-50%);
+    		transform: translateX(-50%);
+		}
+
+		.scene {
+			display: block;
+			position: absolute;
+			min-width: 100%;
+			height: 100%;
+			z-index: 10;
+		}
+
+		.waves {
+			display: block;
+			position: absolute;
+			min-width: 100%;
+			height: 100%;
+			z-index: 1;
+		}
+
+		.waves .wave {
+			display: block;
+			position: absolute;
+			min-width: 100%;
+			height: 100%;
+			z-index: 8;
+			background-size: auto auto;
+			background-repeat: no-repeat;
+			opacity:0.5;
+		}
+
+		.waves .wave.wave_1 {
+			background-image: url(img/wave1.png);
+			z-index: 8;
+			background-position: 3% -10%;
+			animation: wave_a 42s infinite cubic-bezier(0.705, 0.005, 0.360, 1.000);
+		}
+		@keyframes wave_a {
+	      0% {
+	      	background-position: 3% -10%;
+		  }
+	      100% {
+	      	background-position: 100% -10%;
+	      }
+	    }
+
+		.waves .wave.wave_2 {
+			background-image: url(img/wave3.png);
+			z-index: 9;
+			background-position: 10% 60%;
+			animation: wave_b 32s infinite linear;
+		}
+		@keyframes wave_b {
+	      0% {
+	      	background-position: 10% 60%;
+	      }
+	      100% {
+	      	background-position: 100% 60%;
+	      }
+	    }
+
+		.waves .wave.wave_3 {
+			background-image: url(img/wave3.png);
+			z-index: 1;
+			background-position: 10% 80%;
+			animation: wave_c 25s infinite linear;
+		}
+		@keyframes wave_c {
+	      0%   {
+	      	background-position: 10% 80%;
+		  }
+	      40%  {
+	      	background-position: 100% 60%;
+	      }
+	      100%  {
+	      	background-position: 10% 80%;
+	      }
+	    }
+
+		.waves .wave.wave_4 {
+			background-image: url(img/wave4.png);
+			z-index: 6;
+			background-position: 80% 10%;
+			animation: wave_d 25s infinite cubic-bezier(0.705, 0.005, 0.360, 1.000);
+		}
+		@keyframes wave_d {
+	      0%   {
+	      	background-position: 10% 10%;
+		  }
+	      40%  {
+	      	background-position: 100% 30%;
+	      }
+	      100%  {
+	      	background-position: 10% 10%;
+	      }
+	    }
+
+		.waves .wave.wave_5 {
+			background-image: url(img/wave5.png);
+			z-index: 2;
+			background-position: 90% center;
+		}
+
+		.scene .background {
+			position: absolute;
+			width: 100%;
+			height: 100%;
+			background-repeat: no-repeat;
+			background-size: 100% 100%;
+		}
+		.column_holder {
+			width:30%;
+			height:95%;
+			position:absolute;
+			bottom:5%;
+			left:10%;
+		}
+		.column_holder .column,
+		.column_holder .drop_column {
+			width:100%;
+			height:100%;
+			position:absolute;
+		}
+		.column_holder .drop_column .bar {
+			z-index: 200;
+		}
+		.column.drop_column .bar.dropped .segment.filled {
+			visibility: hidden;
+		}
+		.column {
+			width:30%;
+			height:80%;
+			position:absolute;
+		}
+		.column.right {
+			bottom:5%;
+			right:10%;
+		}
+		.column .bar {
+			position:absolute;
+			padding: 0 25px;
+			margin: 0;
+			background-image: url(img/plank-left.png), url(img/plank-right.png);
+			background-position: left, right;
+			background-size: auto 100%, auto 100%;
+			background-repeat: no-repeat, no-repeat;
+		}
+		.column .bar.dropped {
+			position:absolute;
+			padding: 0;
+			margin: 0;
+			  /* background: none; */  
+			background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNk8AEAAFIATgDK/mEAAAAASUVORK5CYII=);
+			-webkit-transition: opacity .2s ease;
+			transition: opacity .2s ease;
+		
+		}
+
+		.column.right .bar.hiddenbarright .chunk .segment {
+			visibility:hidden;
+		}
+		.column.right .bar.numbers .chunk .segment {
+			visibility:hidden;
+		}
+
+		.column.right .bar.numbers.ui-draggable-dragging .chunk .segment {
+			visibility:visible;
+		}
+
+		.column.right .bar.bars .nr {
+			visibility:hidden;
+		}
+
+		.column.right .bar.numbers.bars .chunk .segment {
+			visibility:visible;
+		}
+		.column.right .bar.numbers.bars .nr {
+			visibility:visible;
+		}
+
+		.column .bar .inner,
+		.drop_column .bar .inner {
+			display: block;
+			position: absolute;
+			width: 100%;
+			height: 100%;
+			padding: 0;
+			margin: 0;
+			border-radius: 4px;
+			background-image: url(img/plank-repeating.png);
+			background-position: right;
+			background-size: auto 100%;
+			background-repeat: repeat-x;
+			z-index: 100;
+		}
+
+		.column .bar.dropped .inner {
+			
+		}
+
+		.column .bar .plank_left {
+			display: block;
+			position: absolute;
+			width: 30%;
+			height: 100%;
+			padding: 0;
+			margin: 0;
+			z-index: 80;
+			background-image: url(img/plank-left.png);
+		    background-position: left;
+		    background-size: auto 100%;
+		    background-repeat: no-repeat;
+		    z-index: 101;
+		}
+		
+		.drop_column .waves_ {
+			display: block;
+			position: absolute;
+			width: 100%;
+			height: 100%;
+			opacity:0;
+      		z-index: 200;
+      		-webkit-transform: translateY(-40%);
+			-ms-transform: translateY(-40%);
+			transform: translateY(-40%);
+		}
+		.drop_column .waves_ .bubble {
+			display: block;
+			position: absolute;
+			width: 50px;
+			height: 50px;
+			top:50%;
+			background-color:#ffffff;
+			animation: anim_bubble 1s forwards linear;
+			animation-iteration-count: 1;
+      		opacity:0;
+      		border-radius: 50%;
+		}
+		.drop_column .waves_.animated {
+			opacity:0.7;
+		}
+		@keyframes anim_bubble
+	    {
+	      0%   {
+	      	opacity:0;
+	      	transform: scale(0);
+		  }
+	      30%  {
+	      	opacity:0.7;
+	      	transform: scale(1.2);
+	      }
+	      100%  {
+	      	opacity:0;
+	      	transform: scale(0);
+	      }
+	    }
+
+	    @-webkit-keyframes anim_bubble /* Safari and Chrome - necessary duplicate */
+	    {
+	      0%   {background: #42cef4;}
+	      20%  {background: #afeeff;}
+	      30%  {background: #ffffff;}
+	      60%  {background: #00bfff;}
+	      80%  {background: #afeeff;}
+	    }
+		.drop_column .waves_.show {
+			opacity:1;
+		}
+
+		.column .bar.nr20 .inner {
+			height: calc(100% - 6px);
+			padding: 3px;
+		}
+		.column .bar.nr15 .inner {
+			height: calc(100% - 6px);
+			padding: 3px;
+		}
+		.column .bar.nr10 .inner {
+			height: calc(100% - 6px);
+			padding: 3px;
+		}
+
+		.column .bar .nr {
+			position:absolute;
+			left:10px;
+			top:50%;
+			z-index:1;
+			transform: translateY(-50%);
+			-webkit-transform: translateY(-50%);
+			-ms-transform: translateY(-50%);
+		}
+		.column .bar.first {
+			position:absolute;
+		}
+		.column .bar.dropped {
+			background-color: transparent;
+			z-index: 100;
+		}
+		.column .bar.dropped .segment {
+			-moz-box-shadow: none;
+   			-webkit-box-shadow: none;
+   			box-shadow: none;
+   			background-color: #444444;
+		}
+		.column .bar .segment {
+			height:calc(100% - 2px);
+			float:left;
+			z-index:2;
+		}
+		.column .bar .chunk {
+			float:left;
+			height: calc(100% - 8px);
+			padding: 4px 3px;
+		}
+		.column .bar .chunk.single {
+			padding: 4px 0;
+		}
+		.column .bar .chunk.full {
+			float:left;
+			border-right: 4px solid #333;
+		}
+		.column .bar .chunk.full.last {
+			border-right: 0px solid #333;
+		}
+		.timer {
+			position:absolute;
+			top:0;
+			left:0;
+			width: 200px;
+			height:20px;
+			background-color: #fff;
+		}
+		.timer ._bar {
+			position:absolute;
+			top:0;
+			left:0;
+			width: 0;
+			height:20px;
+			background-color: #aaa;
+		}
+
+		.segment {
+			background-color: #aaa;
+			margin: 0 1px;
+			border-radius: 5px;
+		}
+		.segment.filled {
+			background-color: transparent;
+			background-color: #666;
+		}
+		.column.right .segment {
+			background-color: transparent;
+		}
+		.column.right .segment.filled {
+			background-color: #444444;
+		}
+		.bar.dropped .segment {
+			background-color: #aaa;
+		}
+		.bar.dropped .segment.filled {
+			background-color: #666;
+		}
+
+		.column.left .segment.filled {
+			background-color: transparent;
+		}
+		.column.left .bar.done .segment.filled {
+			background-color: #444444;
+		}
+		.column.left .bar.done.dropped .segment.filled {
+			background-color: #aaaaaa;
+		}
+		.rightcolumn_inner {
+			position: absolute;
+			bottom: 0;
+			width:100%;
+		}
+	</style>
+</head>
+<body>
+
+	<div class="wrapper">
+
+		<div class="waves">
+			<div class="wave wave_1"></div>
+			<div class="wave wave_2"></div>
+			<!-- <div class="wave wave_3"></div>
+			<div class="wave wave_4"></div>
+			<div class="wave wave_5"></div> -->
+		</div>
+
+		<div class="noMouseCover"></div>
+
+		<div class="scene">
+
+			<div class="timer"><div class="_bar timerbar"></div></div>
+			<div class="column_holder">
+				
+				<div class="column left leftcolumn"></div>
+				<div class="drop_column column"></div>
+			</div>
+			<div class="column right rightcolumn">
+				<div class="rightcolumn_inner"></div>
+			</div>
+			
+		</div>
+		
+	</div>
+
+	<script src="inc/levels.js"></script>
+
+	<script type="text/javascript">
+
+		(function(levelsJSON) {
+
+			class NumberpalsClass {
+				constructor(levelsJSON,currentLevel) {
+
+					/*
+					var sounds = [];
+					sounds.drop_bar = new Audio(core.getActiveWidget().path+'/audio/drop_bar.ogg');
+					sounds.wrong_bar = new Audio(core.getActiveWidget().path+'/audio/wrong_bar.ogg');
+					sounds.correct_bar = new Audio(core.getActiveWidget().path+'/audio/correct_bar.ogg');
+					*/
+
+					this.backgroundLoop = new SeamlessLoop();
+				    this.backgroundLoop.addUri('/audio/background.ogg', 10000,"background");
+				    this.backgroundLoop.callback(() => {
+				    	this.startBackground();
+				    });
+
+					this.sounds = [];
+					this.sounds.drop_bar = new Audio('/audio/drop_bar.ogg');
+					this.sounds.wrong_bar = new Audio('/audio/wrong_bar.ogg');
+					this.sounds.correct_bar = new Audio('/audio/correct_bar.ogg');
+
+					this.sounds.drop_bar.volume = 0.6;
+					this.sounds.correct_bar.volume = 0.6;
+
+					this.level = parseInt(currentLevel);
+					this.currentNumber = null;
+					this.nrBarsPerRound = 11;
+					this.secondsPerBar = 7;
+					this.previousNumbers = [];
+
+					this.barsArray = [];
+					this.usedNumbers = [];
+
+					this.timer = 0;
+					this.interval = null;
+
+					this.levelsJSON = levelsJSON;
+
+					this.currentLevel = null;
+
+					this.wrapper = document.getElementsByClassName('wrapper')[0];
+					this.columnLeft = document.getElementsByClassName('leftcolumn')[0];
+					this.dropColumn = document.getElementsByClassName('drop_column')[0];
+					this.columnRight = document.getElementsByClassName('rightcolumn_inner')[0];
+					this.timerbar = document.getElementsByClassName('timerbar')[0];
+					this.waves = document.getElementsByClassName('waves')[0];
+				}
+
+				startBackground(event) {
+					this.backgroundLoop.start('background');
+				}
+
+				playSound(sound) {
+					sound.currentTime = 0;
+					sound.play();
+				}
+
+				renderNextBar() {
+					var that = this;
+
+					this.currentNumber = this.makeRandomNumber();
+
+					var nrBarsAlreadyInPlace = $(this.columnLeft).find('.bar').not('.dropped').length;
+					var columnHeight = $(this.columnLeft).outerHeight();
+
+					var bar = this.makeBar(this.currentNumber,'left');
+					$(this.columnLeft).prepend(bar);
+
+					var columnHeight = $(this.columnLeft).outerHeight();
+
+					var barHeight = this.getBarHeight();
+
+					$(this.columnLeft).find('.bar:first').animate({
+						bottom: barHeight*nrBarsAlreadyInPlace+'px'
+					}, 1000, function() {
+						
+					});
+				}
+
+				renderRightColumn() {
+					var that = this;
+
+					$('.rightcolumn .bar').draggable('destroy');
+					$('.rightcolumn .bar').remove();
+
+					var columnHeight = $(this.columnLeft).outerHeight();
+					var posIterator = 0;
+
+					var html = '';
+					for(var i = 0; i < parseInt(this.currentLevel.maxValueRange)+1; i++) {
+						var bar = $(this.makeBar(i,'right'));
+						bar.css({'bottom':posIterator+'px'});
+						$(bar).prependTo(this.columnRight).draggable({
+							revert: 'invalid'
+						});
+						posIterator = posIterator + (columnHeight/this.currentLevel.maxValueRange);
+					}
+				}
+
+				// barType 
+
+				// BARS - show the bar with number boxes 
+				// NUMBERS - show bar with the number 
+				//         - also show number on leftside 
+				// 2COLOR - different color boxes on left and right side 
+				// HIDDENBARIGHT/NUMBERS - hide boxes on current bar, only show number but show boxen when done 
+				// 						 - numbers only in right column 
+
+				getLevelClassName() {
+
+					var classNames = '';
+					if (this.currentLevel.barType.indexOf('HIDDENBARIGHT/NUMBERS') !== -1) {
+						return ' hiddenbarright numbers ';
+					}
+					if (this.currentLevel.barType.indexOf('2COLOR') !== -1) {
+						classNames += ' twocolor ';
+					}
+					if (this.currentLevel.barType.indexOf('BARS') !== -1) {
+						classNames += ' bars ';
+					}
+					if (this.currentLevel.barType.indexOf('NUMBERS') !== -1) {
+						classNames += ' numbers ';
+					}
+
+					return classNames;
+				}
+
+				makeBar(nr,type,dropPosition) {
+					var that = this;
+
+					var nrChunks = Math.ceil(that.currentLevel.maxValueRange/that.currentLevel.chunking);
+					if (!Number.isFinite(nrChunks)) {
+						nrChunks = 0;
+					}
+					
+					var columnWidth = $(this.columnRight).outerWidth()-(nrChunks*10);
+					var columnHeight = $(this.columnLeft).outerHeight();
+					
+					var segmentWidth = 'width:'+((columnWidth/this.currentLevel.maxValueRange)-2)+'px;';
+					var barStyle = '';
+					var segmentStyle = '';
+					var barClass = '';
+					if (type === 'left') {
+						barClass = 'first';
+						barStyle = 'position:absolute;bottom:100%';
+						segmentStyle = 'float:left;';
+					}
+					if (type === 'right') {
+						segmentStyle = 'float:left;';
+					}
+					if (type === 'dropped') {
+						var _bar = $(this.columnLeft).find('.bar:first').not( ".dropped" );
+						var barHeight = _bar.height();
+						var currentDropLimit = _bar.offset().top-barHeight;
+						if (currentDropLimit<dropPosition) {
+							console.log(currentDropLimit,dropPosition);
+							var bottom = (columnHeight-currentDropLimit)-barHeight;
+						} else {
+							var bottom = (columnHeight-dropPosition)-barHeight;
+						}
+						
+						var dropPosition = 'bottom:' + bottom + 'px';
+						barClass = 'dropped';
+						barStyle = 'position:absolute;'+dropPosition;
+						segmentStyle = 'float:left;';
+					}
+					var chunkerArrayAll = [];
+					var chunkI = 0;
+
+					for(var i = 0; i < this.currentLevel.maxValueRange; i++) {
+						if (i < nr) {
+							chunkerArrayAll.push('<div style="' + segmentWidth + ' ' + segmentStyle + '" class="segment"></div>');
+						} else {
+							chunkerArrayAll.push('<div style="' + segmentWidth + ' ' + segmentStyle + '" class="segment filled"></div>');
+						}
+					}
+
+					if (type == 'dropped') {
+						chunkerArrayAll.reverse();
+					}
+
+					var chunkerArray = [];
+					chunkerArray[chunkI] = [];
+
+					_.each(chunkerArrayAll, function(item,i) {
+						if (i % that.currentLevel.chunking === 0 && i !== 0) {
+							chunkI++;
+							chunkerArray[chunkI] = [];
+						}
+						chunkerArray[chunkI].push(item);
+					});
+
+					var levelClassName = this.getLevelClassName();
+
+					var displayNr = nr;
+					if (type == 'right') {
+						var displayNr = this.currentLevel.maxValueRange-nr;
+					}
+
+					var barHeight = this.getBarHeight();
+
+					var html = '<div style="height:' + barHeight + 'px;width:100%;' + barStyle + '" class="bar nr' + this.currentLevel.maxValueRange + ' ' + barClass + levelClassName + '">';
+
+						if (type == 'dropped') {
+							html += '<div class="waves_"></div>';
+						}
+
+						html += '<div class="inner">';
+
+						html += '<div class="nr">' + displayNr + '</div>';
+
+						_.each(chunkerArray, function(items,i) {
+
+							var chunkStyle = items.length === parseInt(that.currentLevel.chunking) ? 'full' : '';
+
+							var is_one_chunk = (chunkerArray.length === 1 ? 'single ' : '');
+							if (i !== chunkerArray.length-1) {
+								html += '<div class="chunk ' + chunkStyle + ' ' + is_one_chunk + '">';
+							} else {
+								html += '<div class="chunk last ' + chunkStyle + ' ' + is_one_chunk + '">';
+							}
+							
+							_.each(items, function(_html,ii) {
+								html +=  _html;
+							});
+
+							html += '</div>';
+						});
+
+					html += '</div></div>';
+					
+					return html;
+				}
+
+				makeRandomNumber() {
+					var found = false;
+					var randomNr;
+
+					while (found === false) {
+						randomNr = Math.floor(Math.random()*this.currentLevel.maxValueRange);
+						if (this.previousNumbers[this.previousNumbers.length-1] !== randomNr) {
+							found = true;
+						}
+					}
+
+					this.previousNumbers.push(randomNr);
+				 
+				    return randomNr;
+				}
+
+				fail() {
+					// this.runLevel();
+				}
+
+				redoBar() {
+
+				}
+
+				win() {
+					this.level = this.level+1;
+					this.runLevel();
+				}
+
+				winAnimation() {
+
+				}
+
+				startTimer() {
+					var that = this;
+					
+					this.interval = setInterval( function() {
+						that.updateTimerBar();
+						if (that.timer == (that.nrBarsPerRound*that.secondsPerBar)) {
+							clearInterval(that.interval);
+							that.fail();
+						}
+						that.timer++;
+					},1000);
+				}
+
+				updateTimerBar() {
+					this.timerbar.style.width = ((this.timer/(this.nrBarsPerRound*this.secondsPerBar))*100)+'%';
+				}
+
+				runRound() {
+					this.renderNextBar();
+				}
+
+				runLevel() {
+					var that = this;
+
+					this.currentLevel = this.getCurrentLevel();
+
+					this.setScreenProportions();
+					
+					this.renderRightColumn()
+					this.runRound();
+					this.startTimer();
+				}
+
+				setScreenProportions() {
+					var wrapperHeight = document.documentElement.clientHeight;
+					this.wrapper.style.width = ((wrapperHeight) * (16/9))+'px';
+				}
+
+				getCurrentLevel() {
+					var that = this;
+					return _.find(this.levelsJSON, function(item,i) { return item.level == that.level; });
+				}
+
+				getBarHeight() {
+					var barHeight = ($(this.columnLeft).outerHeight()-(this.currentLevel.maxValueRange*4))/this.currentLevel.maxValueRange;
+					barHeight = barHeight > 40 ? 40 : barHeight;
+					return barHeight;
+				}
+
+				barDrop(columnLeft,event,ui) {
+					var that = this;
+
+					this.playSound(this.sounds.drop_bar);
+
+					var nrBarsAlreadyInPlace = $(this.columnLeft).find('.bar').length;
+
+					this.renderRightColumn();
+
+					var columnHeight = $(this.columnLeft).outerHeight();
+					
+					var nrAnswer = $(ui.draggable).find('.segment.filled').length;
+
+					$(ui.draggable).remove();
+
+					var bar = this.makeBar(nrAnswer,'dropped',ui.offset.top - $(event.target).offset().top);
+					
+					$(this.dropColumn).append(bar);
+
+					var rightAnswer = this.rightOrWrong(nrAnswer,that.currentNumber);
+
+					var barHeight = this.getBarHeight();
+
+					if (rightAnswer) {
+						var animateTo = barHeight*(nrBarsAlreadyInPlace-1);
+						$(that.dropColumn).find('.dropped').find('.waves_').addClass('show');
+						setTimeout(() => {
+							$(this.dropColumn).find('.dropped').css({background:'none'});
+						},700);
+					} else {
+						var animateTo = barHeight*nrBarsAlreadyInPlace;
+					}
+
+					if (rightAnswer) {
+						setTimeout(() => {
+							that.barWin();
+						},400);
+					} else {
+						setTimeout(() => {
+							that.barFail($(this.dropColumn).find('.dropped'));
+						},900);
+					}
+
+					$(this.dropColumn).find('.dropped').animate({
+						bottom: animateTo+'px'
+					}, 1000, function() {
+						
+					});
+				}
+
+				rightOrWrong(nrAnswer,currentNumber) {
+					var that = this;
+
+					if (this.currentLevel.maxValueRange == (nrAnswer+parseInt(currentNumber))) {
+						return true;
+					} else {
+						return false;
+					}
+				}
+
+				barWin() {
+					var that = this;
+
+					this.playSound(this.sounds.correct_bar);
+
+					$(this.columnLeft).find('.bar:first').addClass('done');
+
+					var dropped = $(that.dropColumn).find('.dropped');
+
+					this.animateBubbles(dropped.find('.waves_'), () => {
+						dropped.find('.waves_').animate({
+						    opacity: 0
+						}, 410, () => {
+						    dropped.remove();
+						});
+						
+					});
+
+					setTimeout( () => {
+						that.renderNextBar();
+					},300);
+				}
+
+				animateBubbles(dropped,callback) {
+					var go = true;
+					var x = 0;
+					var barWidth = $(this.columnLeft).find('.bar:first').width();
+					var diameter = 50;
+					var bubble;
+					var time;
+					var animDuration = 1;
+					var color_iterator = 0;
+					var global_interator = 0;
+
+					var colors = ['#42d9f4','#bceaf2','#ffffff'];
+					
+					function animate() {
+						time = getRandomInt(50, 110);
+						setTimeout( () => {
+
+							diameter = getRandomInt(25, 60-(global_interator*4));
+							animDuration = getRandomInt(90, 140)/100;
+
+							bubble = $('<div class="bubble"></div>');
+							bubble.css({
+								'background-color':colors[color_iterator],
+								left: x+'px',
+								width: diameter+'px',
+								height: diameter+'px',
+								'animation-duration': animDuration+'s'
+							});
+						    dropped.append(bubble);
+						    x = x + 29;
+						    if (x < barWidth) {
+						    	color_iterator++;
+						    	global_interator++;
+						    	if (color_iterator > colors.length) {
+									color_iterator = 0;
+								}
+						    	animate();
+						    } else {
+						    	setTimeout( () => {
+						    		callback();
+						    	},100);
+						    }
+						    
+						},time);
+					} 
+
+					animate()
+
+					function getRandomInt(min, max) {
+					    return Math.floor(Math.random() * (max - min + 1)) + min;
+					}
+
+					//callback();
+				}
+
+				barFail(dropped_bar) {
+					var that = this;
+
+					this.playSound(this.sounds.wrong_bar);
+
+					dropped_bar.effect( "shake" );
+
+					setTimeout( function() {
+						dropped_bar.remove();
+					},1000);
+				}
+
+				startWaveAnimation() {
+					var that = this;
+
+					var waves = $(this.waves).find('.wave');
+					waves.each( function(i,elem) {
+						that.waveAnimation(elem);
+					});
+		        }
+
+		        waveAnimation(elem) {
+		        	elem.animate({
+					    background: "toggle"
+					}, 5000, function() {
+					    // Animation complete.
+					});
+		        	//easeInOutBack
+		        }
+
+				init() {
+					var that = this;
+
+					$(this.columnLeft).droppable({
+						accept: ".bar",
+						tolerance: "intersect",
+						drop: function( event, ui ) {
+
+							that.barDrop(this,event,ui);
+						}
+					});
+
+					// this.startWaveAnimation();
+					this.runLevel();
+		        }
+
+			}
+
+			window.onload = function() {
+
+				var level = getUrlParameter('level');
+				if (!level.length) {
+					level = 0;
+				}
+
+				var Numberpals = new NumberpalsClass(levelsJSON,level);
+				Numberpals.init();
+			};
+
+			function getUrlParameter(name) {
+			    name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+			    var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+			    var results = regex.exec(location.search);
+			    return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+			};
+
+			function dragMoveListener (event) {
+			    var target = event.target,
+			        // keep the dragged position in the data-x/data-y attributes
+			        x = (parseFloat(target.getAttribute('data-x')) || 0) + event.dx,
+			        y = (parseFloat(target.getAttribute('data-y')) || 0) + event.dy;
+
+			    // translate the element
+			    target.style.webkitTransform =
+			    target.style.transform =
+			      'translate(' + x + 'px, ' + y + 'px)';
+
+			    // update the posiion attributes
+			    target.setAttribute('data-x', x);
+			    target.setAttribute('data-y', y);
+			};
+
+			// this is used later in the resizing and gesture demos
+			window.dragMoveListener = dragMoveListener;
+			
+
+		})(levelsJSON);
+
+		function csvJSON(csv) {
+			var lines=csv.split("\n");
+			var result = [];
+
+			var headers=lines[0].split("\t");
+
+			for(var i=1;i<lines.length;i++){
+				var obj = {};
+				var currentline=lines[i].split("\t");
+				for(var j=0;j<headers.length;j++){
+					obj[headers[j]] = currentline[j];
+				}
+				result.push(obj);
+			}
+			  
+			return result;
+		}
+
+	</script>
+
+	<script src="js/jquery-3.2.1.min.js"></script>
+	<script src="js/jquery-ui.min.js"></script>
+	<script src="js/underscore.js"></script>
+	<script src="js/seamlessloop.js"></script>
+
+</body>
+</html>
