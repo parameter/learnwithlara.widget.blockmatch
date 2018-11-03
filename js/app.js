@@ -1,3 +1,14 @@
+class Blockmatch extends Widget {
+	constructor(specification)  {
+		super(specification);
+	}
+	
+	initialize() {
+		blockmatch();
+	}
+}
+
+function blockmatch() { 
 (function(levelsJSON) {
 
 			class NumberpalsClass {
@@ -597,7 +608,8 @@
 			window.dragMoveListener = dragMoveListener;
 			
 
-		})(levelsJSON);
+		})
+	}
 
 		function csvJSON(csv) {
 			var lines=csv.split("\n");

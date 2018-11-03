@@ -1,0 +1,12 @@
+{
+	"Name": "Blockmatch",
+	"AddonIdentifier": "checheza.widget.blockmatch",
+	"Author": "Checheza AB",
+	"Version": "0.0.1",
+	"SupportedCores": ["0.0.1"],
+	"AddonType": "Widget",
+	"Dependencies": [],
+	"MainClass": "Memory",
+	"MainClassFile": "js/app.js",
+	"MainView": "index.html"
+}
