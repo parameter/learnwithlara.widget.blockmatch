@@ -6,7 +6,7 @@
 	"SupportedCores": ["0.0.1"],
 	"AddonType": "Widget",
 	"Dependencies": [],
-	"MainClass": "Memory",
+	"MainClass": "Blockmatch",
 	"MainClassFile": "js/app.js",
 	"MainView": "index.html"
 }
