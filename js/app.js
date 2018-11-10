@@ -7,14 +7,14 @@ class Blockmatch extends Widget {
 	}
 
 	initialize() {
-		this.numberpals = new NumberpalsClass(levelsJSON, 0);
-		this.numberpals.init();
+		setTimeout( () => {
+			this.blockmatch = new BlockmatchClass(levelsJSON, 0);
+			this.blockmatch.init();
+		},100);
 	}
 }
 
-
-
-class NumberpalsClass {
+class BlockmatchClass {
 
 	constructor(levelsJSON, currentLevel) {
 
@@ -49,7 +49,7 @@ class NumberpalsClass {
 
 		this.level = parseInt(currentLevel);
 		this.currentNumber = null;
-		this.nrBarsPerRound = 3;
+		this.nrBarsPerRound = 11;
 		this.secondsPerBar = 7;
 		this.previousNumbers = [];
 

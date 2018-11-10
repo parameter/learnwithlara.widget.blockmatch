@@ -58,47 +58,62 @@ body,html {
 	background-image: url(../img/wave1.png);
 	z-index: 8;
 	background-position: 3% -10%;
-	animation: wave_a 42s infinite cubic-bezier(0.705, 0.005, 0.360, 1.000);
+	animation: wave_a 42s infinite ease;
 }
 @keyframes wave_a {
-  0% {
-  	background-position: 3% -10%;
-  }
-  100% {
-  	background-position: 100% -10%;
-  }
+	0% {
+		background-position: 3% -10%;
+		opacity:0;
+	}
+	35% {
+		background-position: 20% -10%;
+		opacity:1;
+	}
+	100% {
+		background-position: 120% -10%;
+		opacity:0;
+	}
 }
 
 .waves .wave.wave_2 {
 	background-image: url(../img/wave3.png);
 	z-index: 9;
 	background-position: 10% 60%;
-	animation: wave_b 32s infinite linear;
+	animation: wave_b 27s infinite ease;
 }
 @keyframes wave_b {
-  0% {
-  	background-position: 10% 60%;
-  }
-  100% {
-  	background-position: 100% 60%;
-  }
+	0% {
+		background-position: 10% 60%;
+		opacity:0;
+	}
+	70% {
+		background-position: 90% 60%;
+		opacity:1;
+	}
+	100% {
+		background-position: 120% 60%;
+		opacity:0;
+	}
 }
 
 .waves .wave.wave_3 {
 	background-image: url(../img/wave3.png);
 	z-index: 1;
 	background-position: 10% 80%;
-	animation: wave_c 25s infinite linear;
+	animation: wave_c 25s infinite ease;
 }
 @keyframes wave_c {
   0%   {
   	background-position: 10% 80%;
+  	opacity:0;
   }
-  40%  {
-  	background-position: 100% 60%;
+  70%  {
+  	background-position: 30% 80%;
+  	opacity:1;
   }
   100%  {
-  	background-position: 10% 80%;
+  	background-position: 120% 80%;
+  	opacity:0;
   }
 }
 
