@@ -447,3 +447,24 @@ body,html {
 	bottom: 0;
 	width:100%;
 }
+
+
+
+.level_select {
+	position: absolute;
+	width:70%;
+	height: 70%;
+	top:15%;
+	left:15%;
+	z-index: 100000;
+}
+.level_select input {
+	padding:9px;
+	font-size: 24px;
+}
+.level_select button {
+	padding:9px;
+	font-size: 24px;
+	border:none;
+}
+

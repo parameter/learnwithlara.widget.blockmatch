@@ -115,6 +115,8 @@ class BlockmatchClass {
 		var columnHeight = $(this.columnLeft).outerHeight();
 		var posIterator = 0;
 
+		console.log(this.currentLevel);
+
 		var html = '';
 		for (var i = 0; i < parseInt(this.currentLevel.maxValueRange) + 1; i++) {
 			var bar = $(this.makeBar(i, 'right'));
@@ -296,7 +298,6 @@ class BlockmatchClass {
 	}
 
 	roundFail() {
-		// this.runLevel();
 		this.nrRoundFails = this.nrRoundFails + 1;
 	}
 
@@ -365,6 +366,7 @@ class BlockmatchClass {
 
 	getCurrentLevel() {
 		var that = this;
+		console.log(this.levelsJSON,that.level);
 		return _.find(this.levelsJSON, function (item, i) { return item.level == that.level; });
 	}
 
@@ -569,8 +571,15 @@ class BlockmatchClass {
 			}
 		});
 
+		$('.level_select button.start_on_level').on('click', (event) => {
+			var level_ =  $('.level_select input[name=level_select]').val();
+			this.level = parseInt(level_);
+			$('.level_select').css({'display':'none'});
+			this.runLevel();
+		});
+
 		// this.startWaveAnimation();
-		this.runLevel();
+		// this.runLevel();
 	}
 
 }
