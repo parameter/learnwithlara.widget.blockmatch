@@ -11,6 +11,8 @@ class Blockmatch extends Widget {
 			this.blockmatch = new BlockmatchClass(levelsJSON, 0);
 			this.blockmatch.init();
 		},100);
+
+		core.utils.addExitButton();
 	}
 }
 
