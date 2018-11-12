@@ -210,13 +210,14 @@ body,html {
 }
 .column .bar {
 	position:absolute;
-	padding: 0 5px 0 15px;
+	padding: 0 5px 0 26px;
 	margin: 0;
 	background-image: url(../img/plank-left.png);
 	background-position: left;
 	background-size: auto 100%;
 	background-repeat: no-repeat;
 }
+
 .column .bar.dropped {
 	position:absolute;
 	margin: 0;
@@ -350,14 +351,14 @@ body,html {
 
 .column .bar .nr {
 	position:absolute;
-	left:10px;
+	left:4px;
 	top:50%;
 	z-index:1;
 	width: 24px;
 	padding:12px 0;
-	transform: translateY(-50%);
-	-webkit-transform: translateY(-50%);
-	-ms-transform: translateY(-50%);
+	transform: translate(-100%,-50%);
+	-webkit-transform: translate(-100%,-50%);
+	-ms-transform: translate(-100%,-50%);
 	text-align: center;
 	font-size: 40px;
     line-height: 0;

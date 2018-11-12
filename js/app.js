@@ -166,7 +166,7 @@ class BlockmatchClass {
 			nrChunks = 0;
 		}
 
-		var columnWidth = $(this.columnRight).outerWidth() - (nrChunks * 10);
+		var columnWidth = $(this.columnRight).outerWidth();
 		var columnHeight = $(this.columnLeft).outerHeight();
 
 		var segmentWidth = 'width:' + ((columnWidth / this.currentLevel.maxValueRange) - 8) + 'px;';
