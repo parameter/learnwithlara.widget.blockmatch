@@ -48,10 +48,20 @@ body,html {
 	top:50%;
 	left:calc(50% - 15px);
 	z-index: 12;
-	font-size: 58px;
-	width:30px;
-	height:30px;
-	text-align: center
+	width:60px;
+	height:60px;
+	text-align: center;
+	background-color: #A6F7FD;
+	border-radius: 30px;
+}
+.current_number_nr {
+	display: block;
+	position: absolute;
+	z-index: 13;
+	font-size: 63px;
+	width:100%;
+	text-align: center;
+	color:#333333;
 }
 
 .waves {
@@ -343,9 +353,16 @@ body,html {
 	left:10px;
 	top:50%;
 	z-index:1;
+	width: 24px;
+	padding:12px 0;
 	transform: translateY(-50%);
 	-webkit-transform: translateY(-50%);
 	-ms-transform: translateY(-50%);
+	text-align: center;
+	font-size: 40px;
+    line-height: 0;
+    background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNc9v1vGgAH5wMC1P3AaAAAAABJRU5ErkJggg==);
+	border-radius: 20px;
 }
 .column .bar.first {
 	position:absolute;
@@ -409,7 +426,7 @@ body,html {
 	display: block;
 	position: relative;
 	background-color: #aaa;
-	margin: 0 1px;
+	margin: 0 4px;
 	border-radius: 5px;
 	overflow: hidden;
 }

@@ -76,7 +76,7 @@ class BlockmatchClass {
 		this.timerbar = document.getElementsByClassName('timerbar')[0];
 		this.waves = document.getElementsByClassName('waves')[0];
 		this.levelIndicator = document.getElementsByClassName('level_indicator')[0];
-		this.currentNumberElement = document.getElementsByClassName('current_number')[0];
+		this.currentNumberElement = document.getElementsByClassName('current_number_nr')[0];
 	}
 
 	startBackground(event) {
@@ -116,10 +116,8 @@ class BlockmatchClass {
 		$('.rightcolumn .bar').draggable('destroy');
 		$('.rightcolumn .bar').remove();
 
-		var columnHeight = $(this.columnLeft).outerHeight();
+		var columnHeight = $(this.columnLeft).height();
 		var posIterator = 0;
-
-		console.log(this.currentLevel);
 
 		var html = '';
 		for (var i = 0; i < parseInt(this.currentLevel.maxValueRange) + 1; i++) {
@@ -128,7 +126,7 @@ class BlockmatchClass {
 			$(bar).prependTo(this.columnRight).draggable({
 				revert: 'invalid'
 			});
-			posIterator = posIterator + (columnHeight / this.currentLevel.maxValueRange);
+			posIterator = posIterator + (columnHeight / this.currentLevel.maxValueRange)-50;
 		}
 	}
 
@@ -171,7 +169,7 @@ class BlockmatchClass {
 		var columnWidth = $(this.columnRight).outerWidth() - (nrChunks * 10);
 		var columnHeight = $(this.columnLeft).outerHeight();
 
-		var segmentWidth = 'width:' + ((columnWidth / this.currentLevel.maxValueRange) - 2) + 'px;';
+		var segmentWidth = 'width:' + ((columnWidth / this.currentLevel.maxValueRange) - 8) + 'px;';
 		var barStyle = '';
 		var segmentStyle = '';
 		var barClass = '';
@@ -589,7 +587,9 @@ class BlockmatchClass {
 			var level_ =  $('.level_select input[name=level_select]').val();
 			this.level = parseInt(level_);
 			$('.level_select').css({'display':'none'});
-			this.runLevel();
+			setTimeout( function() {
+				that.runLevel();
+			},200);
 		});
 
 		// this.startWaveAnimation();
