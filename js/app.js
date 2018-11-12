@@ -126,7 +126,7 @@ class BlockmatchClass {
 			$(bar).prependTo(this.columnRight).draggable({
 				revert: 'invalid'
 			});
-			posIterator = posIterator + (columnHeight / this.currentLevel.maxValueRange)-50;
+			posIterator = posIterator + ((columnHeight-90) / this.currentLevel.maxValueRange);
 		}
 	}
 
@@ -324,6 +324,8 @@ class BlockmatchClass {
 			if (that.timer == (that.nrBarsPerRound * that.secondsPerBar)) {
 				clearInterval(that.interval);
 				that.roundFail();
+				that.resetGame();
+				that.runLevel();
 			}
 			that.timer++;
 		}, 1000);
