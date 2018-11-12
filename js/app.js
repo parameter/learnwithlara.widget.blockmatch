@@ -73,6 +73,8 @@ class BlockmatchClass {
 		this.columnRight = document.getElementsByClassName('rightcolumn_inner')[0];
 		this.timerbar = document.getElementsByClassName('timerbar')[0];
 		this.waves = document.getElementsByClassName('waves')[0];
+		this.levelIndicator = document.getElementsByClassName('level_indicator')[0];
+		this.currentNumberElement = document.getElementsByClassName('current_number')[0];
 	}
 
 	startBackground(event) {
@@ -345,6 +347,14 @@ class BlockmatchClass {
 		this.timer = 0;
 	}
 
+	renderCurrentNumber() {
+		$(this.currentNumberElement).html(this.currentLevel.maxValueRange);
+	}
+
+	renderLevelIndicator() {
+		$(this.levelIndicator).html(this.level);
+	}
+
 	runLevel() {
 		var that = this;
 
@@ -354,7 +364,9 @@ class BlockmatchClass {
 
 		this.setScreenProportions();
 
-		this.renderRightColumn()
+		this.renderRightColumn();
+		this.renderLevelIndicator();
+		this.renderCurrentNumber();
 		this.runRound();
 		this.startTimer();
 	}
