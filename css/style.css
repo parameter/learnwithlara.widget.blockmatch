@@ -212,7 +212,7 @@ body,html {
 	position:absolute;
 	padding: 0 5px 0 26px;
 	margin: 0;
-	background-image: url(../img/plank-left.png);
+	background-image: url(../img/plank-left2.png);
 	background-position: left;
 	background-size: auto 100%;
 	background-repeat: no-repeat;
@@ -379,17 +379,18 @@ body,html {
 		background-color: #444444;
 }
 .column .bar .segment {
-	height:calc(100% - 2px);
+	height: 80%;
+	top: 10%;
 	float:left;
 	z-index:2;
 }
 .column .bar .chunk {
 	float:left;
-	height: calc(100% - 8px);
-	padding: 4px 3px;
+	height: 100%;
+	padding: 0 3px;
 }
 .column .bar .chunk.single {
-	padding: 4px 0;
+	padding: 0;
 }
 .column .bar .chunk.full {
 	float:left;

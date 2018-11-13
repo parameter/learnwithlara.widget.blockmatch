@@ -110,6 +110,15 @@ class BlockmatchClass {
 		});
 	}
 
+	getBarHeight() {
+		//var barHeight = $(this.columnLeft).height() / this.nrBarsPerRound;
+		//barHeight = barHeight > 40 ? 40 : barHeight;
+		//return barHeight;
+		var barHeight = ($(this.columnLeft).height()-90) / this.currentLevel.maxValueRange;
+		barHeight = barHeight > 40 ? 40 : barHeight;
+		return barHeight;
+	}
+
 	renderRightColumn() {
 		var that = this;
 
@@ -119,14 +128,16 @@ class BlockmatchClass {
 		var columnHeight = $(this.columnLeft).height();
 		var posIterator = 0;
 
+		var barHeight = this.getBarHeight();
+
 		var html = '';
 		for (var i = 0; i < parseInt(this.currentLevel.maxValueRange) + 1; i++) {
 			var bar = $(this.makeBar(i, 'right'));
-			bar.css({ 'bottom': posIterator + 'px' });
+			bar.css({ 'bottom': posIterator + 'px', 'height': barHeight + 'px' });
 			$(bar).prependTo(this.columnRight).draggable({
 				revert: 'invalid'
 			});
-			posIterator = posIterator + ((columnHeight-90) / this.currentLevel.maxValueRange);
+			posIterator = (posIterator + barHeight);
 		}
 	}
 
@@ -186,7 +197,6 @@ class BlockmatchClass {
 			var barHeight = _bar.height();
 			var currentDropLimit = _bar.offset().top - barHeight;
 			if (currentDropLimit < dropPosition) {
-				console.log(currentDropLimit, dropPosition);
 				var bottom = (columnHeight - currentDropLimit) - barHeight;
 			} else {
 				var bottom = (columnHeight - dropPosition) - barHeight;
@@ -382,12 +392,6 @@ class BlockmatchClass {
 		var that = this;
 		console.log(this.levelsJSON,that.level);
 		return _.find(this.levelsJSON, function (item, i) { return item.level == that.level; });
-	}
-
-	getBarHeight() {
-		var barHeight = ($(this.columnLeft).outerHeight() - (this.currentLevel.maxValueRange * 4)) / this.currentLevel.maxValueRange;
-		barHeight = barHeight > 40 ? 40 : barHeight;
-		return barHeight;
 	}
 
 	barDrop(columnLeft, event, ui) {
