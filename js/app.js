@@ -317,11 +317,6 @@ class BlockmatchClass {
 
 	}
 
-	win() {
-		this.level = this.level + 1;
-		this.runLevel();
-	}
-
 	winAnimation() {
 
 	}
@@ -428,8 +423,6 @@ class BlockmatchClass {
 			var animateTo = barHeight * nrBarsAlreadyInPlace;
 		}
 
-
-
 		if (rightAnswer) {
 			setTimeout(() => {
 				that.barWin();
@@ -468,25 +461,27 @@ class BlockmatchClass {
 
 		var dropped = $(that.dropColumn).find('.dropped');
 
-		this.animateBubbles(dropped.find('.waves_'), () => {
+		//this.animateBubbles(dropped.find('.waves_'), () => {
 			dropped.find('.waves_').animate({
 				opacity: 0
 			}, 410, () => {
 				dropped.remove();
 			});
-		});
+		//});
 
 		if (this.nrBarWins === this.nrBarsPerRound) {
 			clearInterval(this.interval);
-			//this.level = this.level+1;
 			this.nrRoundWins = this.nrRoundWins + 1;
+			if (this.nrRoundWins === 3) {
+				this.nrRoundWins = 0;
+				this.level = this.level + 1;
+			}
 			setTimeout(() => {
 				that.resetGame();
 				that.runLevel();
 			}, 3000);
 		} else {
 			setTimeout(() => {
-
 				that.renderNextBar();
 			}, 300);
 		}
