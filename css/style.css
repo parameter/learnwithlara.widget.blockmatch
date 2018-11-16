@@ -193,8 +193,6 @@ body,html {
 	position:absolute;
 }
 
-
-
 .column_holder .drop_column .bar {
 	z-index: 200;
 }
@@ -212,7 +210,7 @@ body,html {
 }
 .column .bar {
 	position:absolute;
-	padding: 0 5px 0 26px;
+	padding: 0 5px 0 35px;
 	margin: 0;
 	background-image: url(../img/plank-left2.png);
 	background-position: left;
@@ -223,8 +221,6 @@ body,html {
 .column .bar.dropped {
 	position:absolute;
 	margin: 0;
-	-webkit-transition: opacity .2s ease;
-	transition: opacity .2s ease;
 }
 
 .column.right .bar.hiddenbarright .chunk .segment {
@@ -353,7 +349,7 @@ body,html {
 
 .column .bar .nr {
 	position:absolute;
-	left:4px;
+	left:-3px;
 	top:50%;
 	z-index:1;
 	width: 24px;
@@ -429,8 +425,7 @@ body,html {
 .segment {
 	display: block;
 	position: relative;
-	background-color: #aaa;
-	margin: 0 4px;
+	margin: 0;
 	border-radius: 5px;
 	overflow: hidden;
 }

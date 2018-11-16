@@ -114,7 +114,7 @@ class BlockmatchClass {
 		//var barHeight = $(this.columnLeft).height() / this.nrBarsPerRound;
 		//barHeight = barHeight > 40 ? 40 : barHeight;
 		//return barHeight;
-		var barHeight = ($(this.columnLeft).height()-90) / this.currentLevel.maxValueRange;
+		var barHeight = ($(this.columnLeft).height()-90) / this.nrBarsPerRound;
 		barHeight = barHeight > 40 ? 40 : barHeight;
 		return barHeight;
 	}
@@ -137,7 +137,7 @@ class BlockmatchClass {
 			$(bar).prependTo(this.columnRight).draggable({
 				revert: 'invalid'
 			});
-			posIterator = (posIterator + barHeight);
+			posIterator = (posIterator + (barHeight+10));
 		}
 	}
 
@@ -180,7 +180,7 @@ class BlockmatchClass {
 		var columnWidth = $(this.columnRight).outerWidth();
 		var columnHeight = $(this.columnLeft).outerHeight();
 
-		var segmentWidth = 'width:' + ((columnWidth / this.currentLevel.maxValueRange) - 8) + 'px;';
+		var segmentWidth = 'width:' + ((parseInt(columnWidth) / parseInt(this.currentLevel.maxValueRange))) + 'px;';
 		var barStyle = '';
 		var segmentStyle = '';
 		var barClass = '';
@@ -196,8 +196,8 @@ class BlockmatchClass {
 			var _bar = $(this.columnLeft).find('.bar:first').not(".dropped");
 			var barHeight = _bar.height();
 			var currentDropLimit = _bar.offset().top - barHeight;
-			if (currentDropLimit < dropPosition) {
-				var bottom = (columnHeight - currentDropLimit) - barHeight;
+			if ((currentDropLimit-50) < dropPosition) {
+				var bottom = ((columnHeight - currentDropLimit) - barHeight)+50;
 			} else {
 				var bottom = (columnHeight - dropPosition) - barHeight;
 			}
@@ -402,7 +402,7 @@ class BlockmatchClass {
 
 		var nrAnswer = $(ui.draggable).find('.segment.filled').length;
 
-		$(ui.draggable).remove();
+		// $(ui.draggable).remove();
 
 		var bar = this.makeBar(nrAnswer, 'dropped', ui.offset.top - $(event.target).offset().top);
 
@@ -418,7 +418,7 @@ class BlockmatchClass {
 			setTimeout(() => {
 				$(this.dropColumn).find('.dropped').css({ background: 'none' });
 				$(this.dropColumn).find('.dropped').find('.inner').css({ background: 'none' });
-			}, 650);
+			}, 900);
 		} else {
 			var animateTo = barHeight * nrBarsAlreadyInPlace;
 		}
@@ -426,16 +426,16 @@ class BlockmatchClass {
 		if (rightAnswer) {
 			setTimeout(() => {
 				that.barWin();
-			}, 400);
+			}, 1100);
 		} else {
 			setTimeout(() => {
 				that.barFail($(this.dropColumn).find('.dropped'));
-			}, 900);
+			}, 1100);
 		}
 
 		$(this.dropColumn).find('.dropped').animate({
 			bottom: animateTo + 'px'
-		}, 1000, function () {
+		}, 1300, 'easeInOutCubic',function () {
 
 		});
 	}
@@ -579,11 +579,11 @@ class BlockmatchClass {
 			accept: ".bar",
 			tolerance: "intersect",
 			drop: function (event, ui) {
-
 				that.barDrop(this, event, ui);
 			}
 		});
 
+		/*
 		$('.level_select button.start_on_level').on('click', (event) => {
 			var level_ =  $('.level_select input[name=level_select]').val();
 			this.level = parseInt(level_);
@@ -592,12 +592,13 @@ class BlockmatchClass {
 				that.runLevel();
 			},200);
 		});
+		*/
 
-		// this.startWaveAnimation();
-		// this.runLevel();
+		this.startWaveAnimation();
+		this.runLevel();
 	}
-
 }
+
 function getUrlParameter(name) {
 	name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
 	var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
