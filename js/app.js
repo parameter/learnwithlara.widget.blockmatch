@@ -45,9 +45,13 @@ class BlockmatchClass {
 		this.sounds.drop_bar = new Audio(core.getActiveWidget().path+'/audio/drop_bar.ogg');
 		this.sounds.wrong_bar = new Audio(core.getActiveWidget().path+'/audio/wrong_bar.ogg');
 		this.sounds.correct_bar = new Audio(core.getActiveWidget().path+'/audio/correct_bar.ogg');
+		this.sounds.round_win = new Audio(core.getActiveWidget().path+'/audio/round_win.ogg');
+		this.sounds.level_win = new Audio(core.getActiveWidget().path+'/audio/level_win.ogg');
 
 		this.sounds.drop_bar.volume = 0.6;
 		this.sounds.correct_bar.volume = 0.6;
+		this.sounds.round_win.volume = 0.8;
+		this.sounds.level_win.volume = 0.8;
 
 		this.level = parseInt(currentLevel);
 		this.currentNumber = null;
@@ -105,7 +109,7 @@ class BlockmatchClass {
 
 		$(this.columnLeft).find('.bar:first').animate({
 			bottom: barHeight * nrBarsAlreadyInPlace + 'px'
-		}, 1000, function () {
+		}, 800, 'easeInOutCubic', function () {
 
 		});
 	}
@@ -425,6 +429,9 @@ class BlockmatchClass {
 
 		if (rightAnswer) {
 			setTimeout(() => {
+				this.playSound(this.sounds.correct_bar);
+			}, 500);
+			setTimeout(() => {
 				that.barWin();
 			}, 1100);
 		} else {
@@ -455,7 +462,6 @@ class BlockmatchClass {
 
 		this.nrBarWins = this.nrBarWins + 1;
 
-		this.playSound(this.sounds.correct_bar);
 
 		$(this.columnLeft).find('.bar:first').addClass('done');
 
@@ -475,11 +481,19 @@ class BlockmatchClass {
 			if (this.nrRoundWins === 3) {
 				this.nrRoundWins = 0;
 				this.level = this.level + 1;
+				setTimeout(() => {
+					that.resetGame();
+					that.runLevel();
+				}, 6800);
+				this.playSound(this.sounds.level_win);
+			} else {
+				setTimeout(() => {
+					that.resetGame();
+					that.runLevel();
+				}, 3300);
+				this.playSound(this.sounds.round_win);
 			}
-			setTimeout(() => {
-				that.resetGame();
-				that.runLevel();
-			}, 3000);
+			
 		} else {
 			setTimeout(() => {
 				that.renderNextBar();
