@@ -8,5 +8,6 @@
 	"Dependencies": [],
 	"MainClass": "Blockmatch",
 	"MainClassFile": "js/app.js",
-	"MainView": "index.html"
+	"MainView": "index.html",
+	"Skins": [ { "checheza.skin.official": [ "general", "reset", "blockmatch" ]}]
 }
