@@ -1,0 +1,13 @@
+{
+	"Name": "Blockmatch",
+	"AddonIdentifier": "checheza.widget.blockmatch",
+	"Author": "Checheza AB",
+	"Version": "0.0.1",
+	"SupportedCores": ["0.0.1"],
+	"AddonType": "Widget",
+	"Dependencies": [],
+	"MainClass": "Blockmatch",
+	"MainClassFile": "js/app.js",
+	"MainView": "index.html",
+	"Skins": [ { "checheza.skin.official": [ "general", "reset", "blockmatch" ]}]
+}
